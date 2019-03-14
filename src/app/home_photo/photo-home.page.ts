@@ -105,16 +105,23 @@ takePicture(sourceType: PictureSourceType) {
     };
 
     this.camera.getPicture(options).then(imagePath => {
+        console.log("normal", imagePath);
         if (this.plt.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
             this.filePath.resolveNativePath(imagePath)
                 .then(filePath => {
+                    console.log("normal", filePath);
                     const correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+                    console.log("corrected", correctPath);
                     const currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+                    console.log("current", currentName);
+
                     this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
                 });
         } else {
             const currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+            console.log("normal", currentName);
             const correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+            console.log("corrected", correctPath);
             this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
         }
     });
